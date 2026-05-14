@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Jian Choi | Portfolio Preview</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Pretendard', sans-serif; background-color: white; color: black; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const Header = () => {
+      return (
+        <header className="fixed top-0 left-0 w-full bg-white z-50 px-8 py-6 border-b border-transparent">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            {/* Logo / Name */}
+            <div className="text-xl font-bold tracking-tight">
+              <a href="#" className="hover:opacity-60 transition-opacity">
+                Jian Choi.
+              </a>
+            </div>
+            
+            {/* Navigation */}
+            <nav>
+              <ul className="flex space-x-10 text-sm font-medium">
+                <li><a href="#work" className="hover:text-gray-400 transition-colors">Work</a></li>
+                <li><a href="#about" className="hover:text-gray-400 transition-colors">About</a></li>
+                <li><a href="#contact" className="hover:text-gray-400 transition-colors">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+        </header>
+      );
+    };
+
+    const projects = [
+      { category: "Film", title: "The Last Piece Day" },
+      { category: "Motion", title: "The Last Piece Day Campaign" },
+      { category: "Branding", title: "Mumchit: Perfume Rebranding" },
+      { category: "Etc", title: "PROJECT : 보이지 않게 설계된 일상" }
+    ];
+
+    const categories = ["All", "Film", "Motion", "Branding", "Etc."];
+
+    const HeroVideo = () => {
+      return (
+        <section className="w-[90%] mx-auto mb-20">
+          <a 
+            href="https://youtu.be/O1Ip8GTIgpI" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block w-full aspect-video rounded-lg overflow-hidden bg-[#F9F9F9] relative group cursor-pointer border border-gray-100 transition-transform duration-300 hover:scale-[1.01]"
+          >
+            <div className="absolute inset-0 flex items-center justify-center bg-black/5 group-hover:bg-black/10 transition-colors">
+              <span className="text-xl font-bold text-gray-800 tracking-wide uppercase">Click to Watch Showreel</span>
+            </div>
+          </a>
+        </section>
+      );
+    };
+
+    const App = () => {
+      const [activeCategory, setActiveCategory] = useState("All");
+
+      return (
+        <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
+          <Header />
+          
+          <main className="pt-40 px-8 max-w-7xl mx-auto">
+            
+            {/* Hero Section */}
+            <section className="mb-24 pb-20 border-b border-gray-100">
+              <h1 className="text-6xl font-bold tracking-tighter leading-tight mb-4">
+                Hi, I'm Jian.
+              </h1>
+              <p className="text-3xl font-light text-gray-800 tracking-tight mb-16">
+                I'm a Visual & Video Designer.
+              </p>
+              
+              {/* Hero Video */}
+              <HeroVideo />
+            </section>
+
+            {/* Work Section */}
+            <section id="work" className="mb-32">
+              {/* Categories */}
+              <div className="mb-12">
+                <ul className="flex space-x-8 text-sm font-medium text-gray-500">
+                  {categories.map((cat) => (
+                    <li key={cat}>
+                      <button 
+                        onClick={() => setActiveCategory(cat)}
+                        className={`pb-1 transition-colors ${activeCategory === cat ? 'text-black border-b border-black' : 'hover:text-black'}`}
+                      >
+                        {cat}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Project List (Grid) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
+                {projects.map((project, index) => (
+                  <div key={index} className="group cursor-pointer">
+                    {/* Visual Placeholder */}
+                    <div className="w-full aspect-video bg-[#F9F9F9] flex items-center justify-center mb-5 transition-transform group-hover:scale-[1.01] duration-300">
+                      <span className="text-[11px] text-gray-300 uppercase tracking-[0.2em]">Project Visualization</span>
+                    </div>
+                    {/* Project Info */}
+                    <div>
+                      <h3 className="text-base font-medium">
+                        <span className="text-gray-500 mr-2">[{project.category}]</span> 
+                        {project.title}
+                      </h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </main>
+          
+          {/* Footer */}
+          <footer className="px-8 py-8 border-t border-gray-100 mt-20">
+            <div className="max-w-7xl mx-auto flex justify-end items-center text-sm text-gray-500">
+              <span>© 2025 Jian. All rights reserved.</span>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
